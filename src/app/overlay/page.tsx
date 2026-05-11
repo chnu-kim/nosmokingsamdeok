@@ -72,9 +72,7 @@ export default function OverlayPage() {
         </span>
       </div>
       <span className="penalty-text">
-        {state.status === "success"
-          ? "축하합니다!"
-          : `벌칙: ${CONFIG.PENALTY}`}
+{`벌칙: ${CONFIG.PENALTY}`}
       </span>
     </div>
   );

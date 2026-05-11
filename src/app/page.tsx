@@ -148,9 +148,6 @@ export default function HomePage() {
 
       <footer className="footer">
         <div className="container">
-          <p className="footer__cheer">
-            삼덕아, 오늘도 한 개비 참았다. 내일도 파이팅!
-          </p>
           <div className="footer__rules">
             <span>기간: 2026.05.13 ~ 2026.06.12 (31일)</span>
             <span>규칙: 한 개비라도 피우면 실패</span>
