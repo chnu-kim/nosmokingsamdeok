@@ -1,7 +1,5 @@
 /* 삼덕이 금연 챌린지 - OBS 오버레이 스타일 */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +8,6 @@
 
 body {
   background: transparent;
-  font-family: 'Noto Sans KR', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -50,13 +47,13 @@ body {
 
 /* --- 진행률 바 --- */
 
-.progress-bar-wrap {
+.overlay-progress-wrap {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.progress-bar {
+.overlay-progress-bar {
   flex: 1;
   height: 6px;
   background: rgba(255, 255, 255, 0.08);
@@ -64,7 +61,7 @@ body {
   overflow: hidden;
 }
 
-.progress-fill {
+.overlay-progress-fill {
   height: 100%;
   width: 0%;
   border-radius: 3px;
@@ -73,7 +70,7 @@ body {
   box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
 }
 
-.progress-text {
+.overlay-progress-text {
   font-size: 10px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.4);
@@ -101,7 +98,6 @@ body {
     0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-.state-before .overlay-container,
 .state-before {
   border-color: rgba(255, 107, 53, 0.3);
 }
@@ -114,7 +110,7 @@ body {
     0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-.state-success .progress-fill {
+.state-success .overlay-progress-fill {
   background: linear-gradient(90deg, #44ff88, #22cc66);
   box-shadow: 0 0 8px rgba(68, 255, 136, 0.4);
 }

@@ -34,7 +34,6 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans KR', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
@@ -231,98 +230,8 @@ section {
   color: var(--text-muted);
 }
 
-/* ---------- Fireworks (Success) ---------- */
-.fireworks {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.fireworks__particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  will-change: transform, opacity;
-  animation: firework-burst 1.8s ease-out forwards;
-}
-
-@keyframes firework-burst {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--fw-x), var(--fw-y)) scale(0);
-    opacity: 0;
-  }
-}
-
-.fireworks__particle::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  background: inherit;
-  opacity: 0.4;
-  filter: blur(4px);
-}
-
-/* ---------- Phase Atmosphere (Ongoing) ---------- */
-body.phase-early {
-  --accent: #ff2222;
-  --accent-glow: rgba(255, 34, 34, 0.3);
-}
-
-body.phase-early::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(255, 0, 0, 0.06) 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-body.phase-mid {
-  --bg: #080808;
-  --bg-card: #101010;
-  --accent: #cc2222;
-  --accent-glow: rgba(204, 34, 34, 0.3);
-}
-
-body.phase-mid::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-body.phase-late {
-  --accent: #ff8c42;
-  --accent-orange: #ffaa55;
-  --accent-glow: rgba(255, 140, 66, 0.25);
-  --success: #34d399;
-  --success-glow: rgba(52, 211, 153, 0.25);
-}
-
-body.phase-late::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.03) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* ---------- Penalty Card ---------- */
-#penalty-section {
+.penalty-section {
   min-height: 60px;
 }
 
@@ -352,133 +261,10 @@ body.phase-late::before {
   margin-bottom: 8px;
 }
 
-.penalty-card__label,
-.penalty-card__name {
-  position: relative;
-  z-index: 2;
-}
-
 .penalty-card__name {
   font-size: 1.8rem;
   font-weight: 900;
   color: var(--accent);
-  position: relative;
-  display: inline-block;
-}
-
-/* Ghost background text */
-.penalty-card__ghost {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: var(--accent);
-  opacity: 0.04;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 1;
-  animation: ghost-float 14s ease-in-out infinite;
-  user-select: none;
-  transition: opacity 0.4s ease;
-}
-
-.penalty-card:hover .penalty-card__ghost,
-.penalty-card:active .penalty-card__ghost {
-  opacity: 0.12;
-}
-
-@keyframes ghost-float {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
-  25% { transform: translate(-50%, -50%) translateY(-6px) rotate(-1deg); }
-  50% { transform: translate(-50%, -50%) translateY(2px) rotate(0.5deg); }
-  75% { transform: translate(-50%, -50%) translateY(-3px) rotate(-0.5deg); }
-}
-
-/* Warning text on hover */
-.penalty-card__warning {
-  position: relative;
-  z-index: 2;
-  font-size: 0.75rem;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-top: 12px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
-}
-
-.penalty-card:hover .penalty-card__warning,
-.penalty-card:active .penalty-card__warning {
-  opacity: 0.7;
-  transform: translateY(0);
-}
-
-/* Shake on hover */
-.penalty-card:hover,
-.penalty-card:active {
-  animation: shake 0.2s ease-in-out infinite;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-1px); }
-}
-
-/* Glitch text effect */
-.penalty-card__name::before,
-.penalty-card__name::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.penalty-card__name::before {
-  color: #ff0000;
-  z-index: -1;
-}
-
-.penalty-card__name::after {
-  color: #00ffff;
-  z-index: -1;
-}
-
-.penalty-card:hover .penalty-card__name::before,
-.penalty-card:active .penalty-card__name::before {
-  opacity: 0.8;
-  animation: glitch-1 0.3s ease-in-out infinite alternate;
-}
-
-.penalty-card:hover .penalty-card__name::after,
-.penalty-card:active .penalty-card__name::after {
-  opacity: 0.8;
-  animation: glitch-2 0.3s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes glitch-1 {
-  0% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, -1px); }
-  25% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 1px); }
-  50% { clip-path: inset(40% 0 30% 0); transform: translate(-1px, 2px); }
-  75% { clip-path: inset(10% 0 70% 0); transform: translate(1px, -1px); }
-  100% { clip-path: inset(50% 0 20% 0); transform: translate(-2px, 1px); }
-}
-
-@keyframes glitch-2 {
-  0% { clip-path: inset(70% 0 5% 0); transform: translate(2px, 1px); }
-  25% { clip-path: inset(15% 0 55% 0); transform: translate(-2px, -1px); }
-  50% { clip-path: inset(45% 0 25% 0); transform: translate(1px, -2px); }
-  75% { clip-path: inset(5% 0 65% 0); transform: translate(-1px, 1px); }
-  100% { clip-path: inset(30% 0 40% 0); transform: translate(2px, -1px); }
 }
 
 /* ---------- Timeline Grid ---------- */
@@ -548,136 +334,10 @@ body.phase-late::before {
   50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 60px rgba(255, 68, 68, 0.1); }
 }
 
-/* ---------- Health Recovery Timeline ---------- */
-.health {
-  padding: 48px 0;
-}
-
-.health__title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-.health__timeline {
-  position: relative;
-  max-width: 520px;
-  margin: 0 auto;
-  padding-left: 36px;
-}
-
-/* 세로 타임라인 줄 */
-.health__timeline::before {
-  content: '';
-  position: absolute;
-  left: 13px;
-  top: 4px;
-  bottom: 4px;
-  width: 2px;
-  background: #2a2a2a;
-}
-
-.health__step {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 20px;
-  margin-bottom: 12px;
-  background: var(--bg-card);
-  border: 1px solid #222;
-  border-radius: var(--radius);
-  position: relative;
-  opacity: 0.35;
-  transition: opacity var(--transition), border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-/* 타임라인 점 */
-.health__step::before {
-  content: '';
-  position: absolute;
-  left: -31px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #333;
-  border: 2px solid #444;
-  transition: background var(--transition), border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-/* 활성 단계 */
-.health__step--active {
-  opacity: 1;
-  border-color: rgba(34, 197, 94, 0.3);
-}
-
-.health__step--active::before {
-  background: var(--success);
-  border-color: var(--success);
-  box-shadow: 0 0 8px var(--success-glow);
-}
-
-.health__icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-  width: 36px;
-  text-align: center;
-}
-
-.health__info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.health__time {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--success);
-}
-
-.health__step:not(.health__step--active) .health__time {
-  color: var(--text-muted);
-}
-
-.health__desc {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-
-.health__step--active .health__desc {
-  color: var(--text);
-}
-
-/* ---------- Savings Counter ---------- */
-.savings {
-  padding: 48px 0;
-  text-align: center;
-}
-
-.savings__title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.savings__amount {
-  font-size: 3.2rem;
-  font-weight: 900;
-  color: var(--success);
-  text-shadow: 0 0 30px var(--success-glow);
-  line-height: 1.2;
-  font-variant-numeric: tabular-nums;
-  margin-bottom: 8px;
-}
-
-.savings__desc {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+/* ---------- Placeholder Sections ---------- */
+.health-section,
+.savings-section {
+  min-height: 40px;
 }
 
 /* ---------- Footer ---------- */
@@ -805,20 +465,7 @@ body.phase-late::before {
     padding: 24px 16px;
   }
 
-  .penalty-card__ghost {
-    font-size: 1.6rem;
-  }
-
   .success-section__title {
     font-size: 1.8rem;
-  }
-
-  .savings__amount {
-    font-size: 2.4rem;
-  }
-
-  .health__step {
-    padding: 12px 14px;
-    gap: 12px;
   }
 }
