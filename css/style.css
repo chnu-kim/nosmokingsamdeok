@@ -262,10 +262,133 @@ section {
   margin-bottom: 8px;
 }
 
+.penalty-card__label,
+.penalty-card__name {
+  position: relative;
+  z-index: 2;
+}
+
 .penalty-card__name {
   font-size: 1.8rem;
   font-weight: 900;
   color: var(--accent);
+  position: relative;
+  display: inline-block;
+}
+
+/* Ghost background text */
+.penalty-card__ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.04;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  animation: ghost-float 14s ease-in-out infinite;
+  user-select: none;
+  transition: opacity 0.4s ease;
+}
+
+.penalty-card:hover .penalty-card__ghost,
+.penalty-card:active .penalty-card__ghost {
+  opacity: 0.12;
+}
+
+@keyframes ghost-float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+  25% { transform: translate(-50%, -50%) translateY(-6px) rotate(-1deg); }
+  50% { transform: translate(-50%, -50%) translateY(2px) rotate(0.5deg); }
+  75% { transform: translate(-50%, -50%) translateY(-3px) rotate(-0.5deg); }
+}
+
+/* Warning text on hover */
+.penalty-card__warning {
+  position: relative;
+  z-index: 2;
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 12px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.penalty-card:hover .penalty-card__warning,
+.penalty-card:active .penalty-card__warning {
+  opacity: 0.7;
+  transform: translateY(0);
+}
+
+/* Shake on hover */
+.penalty-card:hover,
+.penalty-card:active {
+  animation: shake 0.2s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+}
+
+/* Glitch text effect */
+.penalty-card__name::before,
+.penalty-card__name::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.penalty-card__name::before {
+  color: #ff0000;
+  z-index: -1;
+}
+
+.penalty-card__name::after {
+  color: #00ffff;
+  z-index: -1;
+}
+
+.penalty-card:hover .penalty-card__name::before,
+.penalty-card:active .penalty-card__name::before {
+  opacity: 0.8;
+  animation: glitch-1 0.3s ease-in-out infinite alternate;
+}
+
+.penalty-card:hover .penalty-card__name::after,
+.penalty-card:active .penalty-card__name::after {
+  opacity: 0.8;
+  animation: glitch-2 0.3s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glitch-1 {
+  0% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, -1px); }
+  25% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 1px); }
+  50% { clip-path: inset(40% 0 30% 0); transform: translate(-1px, 2px); }
+  75% { clip-path: inset(10% 0 70% 0); transform: translate(1px, -1px); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(-2px, 1px); }
+}
+
+@keyframes glitch-2 {
+  0% { clip-path: inset(70% 0 5% 0); transform: translate(2px, 1px); }
+  25% { clip-path: inset(15% 0 55% 0); transform: translate(-2px, -1px); }
+  50% { clip-path: inset(45% 0 25% 0); transform: translate(1px, -2px); }
+  75% { clip-path: inset(5% 0 65% 0); transform: translate(-1px, 1px); }
+  100% { clip-path: inset(30% 0 40% 0); transform: translate(2px, -1px); }
 }
 
 /* ---------- Timeline Grid ---------- */
@@ -464,6 +587,10 @@ section {
 
   .penalty-card {
     padding: 24px 16px;
+  }
+
+  .penalty-card__ghost {
+    font-size: 1.6rem;
   }
 
   .success-section__title {
