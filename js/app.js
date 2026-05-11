@@ -36,6 +36,14 @@
 
     // 벌칙
     penaltySection: $('#penalty-section'),
+
+    // 건강 회복
+    healthSection: $('#health-section'),
+    healthSteps: $$('#health-section .health__step'),
+
+    // 절약 금액
+    savingsSection: $('#savings-section'),
+    savingsAmount: $('#savings-amount'),
   };
 
   /* ---------- 렌더링 ---------- */
@@ -103,6 +111,37 @@
     dom.timelineGrid.innerHTML = html;
   }
 
+  /* ---------- 건강 회복 & 절약 금액 ---------- */
+
+  /** 경과 시간에 따라 건강 단계 활성/비활성 토글 */
+  function updateHealth() {
+    var status = getChallengeStatus();
+    dom.healthSection.classList.toggle('hidden', status === 'before');
+
+    if (status === 'before') return;
+
+    var elapsed = Date.now() - new Date(CONFIG.START_DATE).getTime();
+
+    dom.healthSteps.forEach(function (step) {
+      var threshold = Number(step.getAttribute('data-ms'));
+      step.classList.toggle('health__step--active', elapsed >= threshold);
+    });
+  }
+
+  /** 절약 금액 계산 및 표시 */
+  function updateSavings() {
+    var status = getChallengeStatus();
+    dom.savingsSection.classList.toggle('hidden', status === 'before');
+
+    if (status === 'before') return;
+
+    var day = getCurrentDay();
+    // 성공(완료) 시에는 전체 일수 기준
+    if (day > CONFIG.TOTAL_DAYS) day = CONFIG.TOTAL_DAYS;
+    var amount = day * CONFIG.CIGARETTE_PRICE_PER_DAY;
+    dom.savingsAmount.textContent = amount.toLocaleString('ko-KR') + '원';
+  }
+
   /* ---------- 메인 루프 ---------- */
 
   let timer = null;
@@ -116,6 +155,9 @@
     } else if (status === 'ongoing') {
       updateProgress();
     }
+
+    updateHealth();
+    updateSavings();
   }
 
   function init() {
