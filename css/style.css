@@ -458,10 +458,136 @@ section {
   50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 60px rgba(255, 68, 68, 0.1); }
 }
 
-/* ---------- Placeholder Sections ---------- */
-#health-section,
-#savings-section {
-  min-height: 40px;
+/* ---------- Health Recovery Timeline ---------- */
+.health {
+  padding: 48px 0;
+}
+
+.health__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.health__timeline {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+  padding-left: 36px;
+}
+
+/* 세로 타임라인 줄 */
+.health__timeline::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: #2a2a2a;
+}
+
+.health__step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  background: var(--bg-card);
+  border: 1px solid #222;
+  border-radius: var(--radius);
+  position: relative;
+  opacity: 0.35;
+  transition: opacity var(--transition), border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+/* 타임라인 점 */
+.health__step::before {
+  content: '';
+  position: absolute;
+  left: -31px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #333;
+  border: 2px solid #444;
+  transition: background var(--transition), border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+/* 활성 단계 */
+.health__step--active {
+  opacity: 1;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.health__step--active::before {
+  background: var(--success);
+  border-color: var(--success);
+  box-shadow: 0 0 8px var(--success-glow);
+}
+
+.health__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.health__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.health__time {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.health__step:not(.health__step--active) .health__time {
+  color: var(--text-muted);
+}
+
+.health__desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.health__step--active .health__desc {
+  color: var(--text);
+}
+
+/* ---------- Savings Counter ---------- */
+.savings {
+  padding: 48px 0;
+  text-align: center;
+}
+
+.savings__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.savings__amount {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--success);
+  text-shadow: 0 0 30px var(--success-glow);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+
+.savings__desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 /* ---------- Footer ---------- */
@@ -595,5 +721,14 @@ section {
 
   .success-section__title {
     font-size: 1.8rem;
+  }
+
+  .savings__amount {
+    font-size: 2.4rem;
+  }
+
+  .health__step {
+    padding: 12px 14px;
+    gap: 12px;
   }
 }
