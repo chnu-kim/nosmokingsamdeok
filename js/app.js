@@ -48,11 +48,68 @@
 
   /* ---------- 렌더링 ---------- */
 
+  /** 일차별 분위기 전환: body에 phase 클래스 부여 */
+  function applyPhase() {
+    var body = document.body;
+    body.classList.remove('phase-early', 'phase-mid', 'phase-late');
+
+    var day = getCurrentDay();
+    if (day >= 1 && day <= 10) {
+      body.classList.add('phase-early');
+    } else if (day >= 11 && day <= 20) {
+      body.classList.add('phase-mid');
+    } else if (day >= 21 && day <= CONFIG.TOTAL_DAYS) {
+      body.classList.add('phase-late');
+    }
+  }
+
+  /** 성공 시 폭죽 파티클 생성 */
+  function createFireworks() {
+    var container = $('#fireworks');
+    if (!container || container.children.length > 0) return;
+
+    var colors = ['#ffd700', '#22c55e', '#ff6b35', '#ffffff', '#ff4444', '#60a5fa'];
+    var particleCount = 50;
+
+    for (var i = 0; i < particleCount; i++) {
+      var span = document.createElement('span');
+      span.className = 'fireworks__particle';
+
+      var startX = 30 + Math.random() * 40;
+      var angle = Math.random() * Math.PI * 2;
+      var distance = 60 + Math.random() * 140;
+      var dx = Math.cos(angle) * distance;
+      var dy = Math.sin(angle) * distance - 40;
+
+      span.style.left = startX + '%';
+      span.style.top = '60%';
+      span.style.setProperty('--fw-x', dx + 'px');
+      span.style.setProperty('--fw-y', dy + 'px');
+      span.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      span.style.width = (4 + Math.random() * 6) + 'px';
+      span.style.height = span.style.width;
+      span.style.animationDelay = (Math.random() * 0.8) + 's';
+      span.style.animationDuration = (1.2 + Math.random() * 1.0) + 's';
+
+      container.appendChild(span);
+    }
+  }
+
   /** 상태에 따라 영역 표시/숨기기 */
   function applyStatus(status) {
     dom.viewBefore.classList.toggle('hidden', status !== 'before');
     dom.viewOngoing.classList.toggle('hidden', status !== 'ongoing');
     dom.viewSuccess.classList.toggle('hidden', status !== 'success');
+
+    if (status === 'ongoing') {
+      applyPhase();
+    } else {
+      document.body.classList.remove('phase-early', 'phase-mid', 'phase-late');
+    }
+
+    if (status === 'success') {
+      createFireworks();
+    }
 
     // 히어로 뱃지
     if (status === 'before') {

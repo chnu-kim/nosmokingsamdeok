@@ -231,6 +231,96 @@ section {
   color: var(--text-muted);
 }
 
+/* ---------- Fireworks (Success) ---------- */
+.fireworks {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fireworks__particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  will-change: transform, opacity;
+  animation: firework-burst 1.8s ease-out forwards;
+}
+
+@keyframes firework-burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--fw-x), var(--fw-y)) scale(0);
+    opacity: 0;
+  }
+}
+
+.fireworks__particle::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.4;
+  filter: blur(4px);
+}
+
+/* ---------- Phase Atmosphere (Ongoing) ---------- */
+body.phase-early {
+  --accent: #ff2222;
+  --accent-glow: rgba(255, 34, 34, 0.3);
+}
+
+body.phase-early::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(255, 0, 0, 0.06) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.phase-mid {
+  --bg: #080808;
+  --bg-card: #101010;
+  --accent: #cc2222;
+  --accent-glow: rgba(204, 34, 34, 0.3);
+}
+
+body.phase-mid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.phase-late {
+  --accent: #ff8c42;
+  --accent-orange: #ffaa55;
+  --accent-glow: rgba(255, 140, 66, 0.25);
+  --success: #34d399;
+  --success-glow: rgba(52, 211, 153, 0.25);
+}
+
+body.phase-late::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* ---------- Penalty Card ---------- */
 #penalty-section {
   min-height: 60px;
