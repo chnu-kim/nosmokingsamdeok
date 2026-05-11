@@ -47,7 +47,6 @@ export default function HomePage() {
           <h1 className="hero__title">
             <em>삼덕이</em>의 금연 챌린지
           </h1>
-          <p className="hero__subtitle">31일, 한 개비도 없이 버텨라.</p>
 
           <div className="day-counter">
             <div className="day-counter__number">
@@ -105,11 +104,7 @@ export default function HomePage() {
 
         {status === "success" && (
           <section className="success-section">
-            <div className="success-section__icon">🎉</div>
-            <h2 className="success-section__title">금연 성공!</h2>
-            <p className="success-section__desc">
-              삼덕이, 31일을 완주했습니다. 삼루먼쇼는 없습니다!
-            </p>
+            <h2 className="success-section__title">금연 성공</h2>
           </section>
         )}
 
