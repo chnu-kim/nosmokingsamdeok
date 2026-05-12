@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import {
   CONFIG,
   getCurrentDay,
@@ -34,6 +34,32 @@ export default function HomePage() {
     const interval = setInterval(tick, status === "before" ? 1000 : 60000);
     return () => clearInterval(interval);
   }, [tick, status]);
+
+  useEffect(() => {
+    const body = document.body;
+    body.classList.remove("phase-early", "phase-mid", "phase-late");
+    if (status === "ongoing") {
+      if (day <= 10) body.classList.add("phase-early");
+      else if (day <= 20) body.classList.add("phase-mid");
+      else body.classList.add("phase-late");
+    } else if (status === "success") {
+      body.classList.add("phase-late");
+    }
+    return () => body.classList.remove("phase-early", "phase-mid", "phase-late");
+  }, [status, day]);
+
+  const confettiPieces = useMemo(() => {
+    const colors = ["#ff4444", "#ff8800", "#ffcc00", "#22c55e", "#3b82f6", "#a855f7", "#ff6b35", "#00ffcc"];
+    return Array.from({ length: 60 }, (_, i) => ({
+      id: i,
+      left: `${(i * 1.7) % 100}%`,
+      width: `${6 + (i % 5) * 2}px`,
+      height: `${8 + (i % 4) * 3}px`,
+      color: colors[i % colors.length],
+      dur: `${2.5 + (i % 10) * 0.3}s`,
+      delay: `${(i % 12) * 0.18}s`,
+    }));
+  }, []);
 
   return (
     <>
@@ -103,9 +129,27 @@ export default function HomePage() {
         )}
 
         {status === "success" && (
-          <section className="success-section">
-            <h2 className="success-section__title">금연 성공</h2>
-          </section>
+          <>
+            <div className="confetti-wrap" aria-hidden="true">
+              {confettiPieces.map((p) => (
+                <div
+                  key={p.id}
+                  className="confetti-piece"
+                  style={{
+                    left: p.left,
+                    width: p.width,
+                    height: p.height,
+                    background: p.color,
+                    ["--cf-dur" as string]: p.dur,
+                    ["--cf-delay" as string]: p.delay,
+                  }}
+                />
+              ))}
+            </div>
+            <section className="success-section">
+              <h2 className="success-section__title">금연 성공</h2>
+            </section>
+          </>
         )}
 
         <section className="penalty-section">

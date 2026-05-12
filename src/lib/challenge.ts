@@ -46,3 +46,16 @@ export function getProgress(): number {
 export function pad2(n: number): string {
   return String(n).padStart(2, "0");
 }
+
+export function getReward(day?: number): number {
+  const d = day ?? getCurrentDay();
+  return d < 10 ? 0 : d * 10000;
+}
+
+export function isRewardUnlocked(day?: number): boolean {
+  return (day ?? getCurrentDay()) >= 10;
+}
+
+export function getDaysUntilReward(day?: number): number {
+  return Math.max(0, 10 - (day ?? getCurrentDay()));
+}

@@ -267,6 +267,58 @@ section {
   color: var(--accent);
 }
 
+/* ---------- Penalty Card — 공포 연출 ---------- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  10%       { transform: translateX(-5px) rotate(-1.2deg); }
+  20%       { transform: translateX(5px) rotate(1.2deg); }
+  30%       { transform: translateX(-8px) rotate(-1.8deg); }
+  40%       { transform: translateX(8px) rotate(1.8deg); }
+  55%       { transform: translateX(-5px) rotate(-1deg); }
+  70%       { transform: translateX(4px) rotate(0.8deg); }
+  85%       { transform: translateX(-2px) rotate(-0.3deg); }
+}
+
+@keyframes glitch {
+  0%, 88%, 100% {
+    clip-path: none;
+    transform: translate(0);
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+  }
+  89% {
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translate(-4px, 1px);
+    color: #ff0055;
+  }
+  91% {
+    clip-path: polygon(0 40%, 100% 40%, 100% 72%, 0 72%);
+    transform: translate(4px, -2px);
+    color: #00ffcc;
+  }
+  93% {
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translate(-3px, 2px);
+    color: var(--accent);
+  }
+  95% {
+    clip-path: none;
+    transform: translate(2px, -1px);
+  }
+}
+
+.penalty-card:hover,
+.penalty-card:active {
+  animation: shake 0.65s ease-out;
+  border-color: #4a1515;
+  cursor: default;
+}
+
+.penalty-card:hover .penalty-card__name,
+.penalty-card:active .penalty-card__name {
+  animation: glitch 2.2s ease-in-out;
+}
+
 /* ---------- Timeline Grid ---------- */
 .timeline {
   padding: 48px 0;
@@ -332,6 +384,49 @@ section {
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
   50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 60px rgba(255, 68, 68, 0.1); }
+}
+
+/* ---------- Phase Transitions (#5) ---------- */
+.phase-early {
+  --accent: #ff4444;
+  --accent-orange: #ff6b35;
+  --accent-glow: rgba(255, 68, 68, 0.25);
+}
+
+.phase-mid {
+  --accent: #c41e1e;
+  --accent-orange: #d43010;
+  --accent-glow: rgba(180, 25, 25, 0.35);
+  --bg: #070707;
+  --bg-card: #101010;
+}
+
+.phase-late {
+  --accent: #ff8800;
+  --accent-orange: #ffaa33;
+  --accent-glow: rgba(255, 136, 0, 0.3);
+}
+
+/* ---------- Confetti (#5) ---------- */
+@keyframes confetti-fall {
+  0%   { transform: translateY(-80px) rotate(0deg) scaleX(1);   opacity: 1; }
+  50%  { transform: translateY(45vh)  rotate(360deg) scaleX(-1); opacity: 0.8; }
+  100% { transform: translateY(105vh) rotate(720deg) scaleX(1);  opacity: 0; }
+}
+
+.confetti-wrap {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  border-radius: 2px;
+  animation: confetti-fall var(--cf-dur) var(--cf-delay) ease-in forwards;
 }
 
 /* ---------- Placeholder Sections ---------- */
