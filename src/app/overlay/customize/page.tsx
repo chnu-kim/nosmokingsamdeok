@@ -54,11 +54,13 @@ export default function CustomizePage() {
   const [iframeSrc, setIframeSrc] = useState("");
 
   useEffect(() => {
-    setParams(loadSaved());
-    setIframeSrc(`${window.location.origin}${buildOverlayUrl(OVERLAY_DEFAULTS)}`);
+    const saved = loadSaved();
+    setParams(saved);
+    setIframeSrc(`${window.location.origin}${buildOverlayUrl(saved)}`);
   }, []);
 
   useEffect(() => {
+    if (!iframeSrc) return;
     iframeRef.current?.contentWindow?.postMessage(
       { type: PREVIEW_MESSAGE_TYPE, params },
       window.location.origin
@@ -66,7 +68,7 @@ export default function CustomizePage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(params));
     } catch {}
-  }, [params]);
+  }, [params, iframeSrc]);
 
   function handleIframeLoad() {
     iframeRef.current?.contentWindow?.postMessage(
