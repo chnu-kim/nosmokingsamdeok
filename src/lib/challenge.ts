@@ -36,11 +36,14 @@ export function msToComponents(ms: number) {
   };
 }
 
-export function getProgress(): number {
-  const day = getCurrentDay();
+export function calcProgress(day: number): number {
   if (day < 1) return 0;
   if (day > CONFIG.TOTAL_DAYS) return 100;
   return Math.round((day / CONFIG.TOTAL_DAYS) * 100);
+}
+
+export function getProgress(): number {
+  return calcProgress(getCurrentDay());
 }
 
 export function pad2(n: number): string {

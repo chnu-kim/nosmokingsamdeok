@@ -50,9 +50,25 @@ body {
 
 /* --- 사이즈 변형 --- */
 
-.size-sm .day-value { font-size: 27px; }
-.size-md .day-value { font-size: 36px; }
-.size-lg .day-value { font-size: 48px; }
+.size-sm .day-value  { font-size: 27px; }
+.size-md .day-value  { font-size: 36px; }
+.size-lg .day-value  { font-size: 48px; }
+
+.size-sm .bn-num     { font-size: 60px; }
+.size-md .bn-num     { font-size: 80px; }
+.size-lg .bn-num     { font-size: 110px; }
+
+.size-sm .ms-day     { font-size: 30px; }
+.size-md .ms-day     { font-size: 40px; }
+.size-lg .ms-day     { font-size: 54px; }
+
+.size-sm .ol-main    { font-size: 11px; }
+.size-md .ol-main    { font-size: 14px; }
+.size-lg .ol-main    { font-size: 18px; }
+
+.size-sm .bo-label   { font-size: 10px; }
+.size-md .bo-label   { font-size: 12px; }
+.size-lg .bo-label   { font-size: 16px; }
 
 /* --- 진행률 바 --- */
 
@@ -140,6 +156,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
+  background: var(--overlay-bg);
   font-family: var(--overlay-font, 'Gowun Batang', serif);
 }
 
@@ -241,6 +258,7 @@ body {
   align-items: center;
   gap: 8px;
   min-width: 160px;
+  background: var(--overlay-bg);
 }
 
 .bo-bar {

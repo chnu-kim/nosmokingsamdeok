@@ -127,6 +127,15 @@ export const PRESETS: Preset[] = [
   },
 ];
 
+export function parsePreviewMessage(event: MessageEvent): OverlayParams | null {
+  const data = event.data;
+  if (!data || typeof data !== "object") return null;
+  if (data.type !== "OVERLAY_PARAMS_UPDATE") return null;
+  const params = data.params;
+  if (!params || typeof params !== "object" || Array.isArray(params)) return null;
+  return params as OverlayParams;
+}
+
 export function buildOverlayUrl(params: OverlayParams): string {
   const base = "/nosmokingsamdeok/overlay/";
   const p = new URLSearchParams();

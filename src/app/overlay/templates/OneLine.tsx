@@ -8,7 +8,7 @@ type Props = {
   cssVars: CSSProperties;
 };
 
-export default function OneLine({ state, cssVars }: Props) {
+export default function OneLine({ params, state, cssVars }: Props) {
   const mainText =
     state.status === "before"
       ? `${CONFIG.PARTICIPANT} 금연 챌린지 D-${state.dDay}`
@@ -17,7 +17,7 @@ export default function OneLine({ state, cssVars }: Props) {
         : `${CONFIG.PARTICIPANT} 금연 ${CONFIG.TOTAL_DAYS}일 완주`;
 
   return (
-    <div className="tmpl-one-line" style={cssVars}>
+    <div className={`tmpl-one-line size-${params.size}`} style={cssVars}>
       <span className="ol-main">{mainText}</span>
       {state.status !== "success" && (
         <>

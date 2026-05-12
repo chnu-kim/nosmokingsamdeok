@@ -4,6 +4,7 @@ import {
   buildOverlayUrl,
   resolveBg,
   resolveOverlayFg,
+  parsePreviewMessage,
   OVERLAY_DEFAULTS,
 } from "../overlayParams";
 
@@ -287,5 +288,63 @@ describe("buildOverlayUrl", () => {
       const params = { ...OVERLAY_DEFAULTS, opacity: 0 };
       expect(roundtrip(params)).toEqual(params);
     });
+  });
+});
+
+// ────────────────────────────────────────────────────────────────
+// parsePreviewMessage
+// ────────────────────────────────────────────────────────────────
+
+describe("parsePreviewMessage", () => {
+  it("유효한 OVERLAY_PARAMS_UPDATE 메시지 → params 반환", () => {
+    const params = { ...OVERLAY_DEFAULTS };
+    const event = { data: { type: "OVERLAY_PARAMS_UPDATE", params } } as MessageEvent;
+    expect(parsePreviewMessage(event)).toEqual(params);
+  });
+
+  it("커스텀 params → 그대로 반환", () => {
+    const params = {
+      ...OVERLAY_DEFAULTS,
+      template: "big-number" as const,
+      fg: "#ff4444",
+      opacity: 0.5,
+    };
+    const event = { data: { type: "OVERLAY_PARAMS_UPDATE", params } } as MessageEvent;
+    expect(parsePreviewMessage(event)).toEqual(params);
+  });
+
+  it("다른 type → null 반환", () => {
+    const event = { data: { type: "OTHER_EVENT" } } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
+  });
+
+  it("type 없는 메시지 → null 반환", () => {
+    const event = { data: {} } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
+  });
+
+  it("data가 null → null 반환", () => {
+    const event = { data: null } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
+  });
+
+  it("data가 string → null 반환 (비객체)", () => {
+    const event = { data: "OVERLAY_PARAMS_UPDATE" } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
+  });
+
+  it("params 필드 없는 OVERLAY_PARAMS_UPDATE → null 반환", () => {
+    const event = { data: { type: "OVERLAY_PARAMS_UPDATE" } } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
+  });
+
+  it("params: null → null 반환", () => {
+    const event = { data: { type: "OVERLAY_PARAMS_UPDATE", params: null } } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
+  });
+
+  it("params: [] (배열) → null 반환 (![] = false 이므로 명시적 Array.isArray 검사 필요)", () => {
+    const event = { data: { type: "OVERLAY_PARAMS_UPDATE", params: [] } } as MessageEvent;
+    expect(parsePreviewMessage(event)).toBeNull();
   });
 });
