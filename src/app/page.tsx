@@ -11,6 +11,7 @@ import {
   pad2,
   type ChallengeStatus,
 } from "@/lib/challenge";
+import RewardSection from "@/components/RewardSection";
 
 export default function HomePage() {
   const [status, setStatus] = useState<ChallengeStatus>("before");
@@ -180,6 +181,10 @@ export default function HomePage() {
             })}
           </div>
         </section>
+
+        {(status === "ongoing" || status === "success") && (
+          <RewardSection day={day} status={status} />
+        )}
 
         <section className="health-section" />
         <section className="savings-section" />

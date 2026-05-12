@@ -23,6 +23,8 @@
   --accent-glow: rgba(255, 68, 68, 0.25);
   --success: #22c55e;
   --success-glow: rgba(34, 197, 94, 0.25);
+  --reward: #e8a020;
+  --reward-glow: rgba(232, 160, 32, 0.25);
   --radius: 12px;
   --radius-sm: 8px;
   --transition: 0.3s ease;
@@ -427,6 +429,70 @@ section {
   top: 0;
   border-radius: 2px;
   animation: confetti-fall var(--cf-dur) var(--cf-delay) ease-in forwards;
+}
+
+/* ---------- Reward Section (#10) ---------- */
+.reward-section {
+  padding: 0 0 48px;
+}
+
+.reward-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(232, 160, 32, 0.25);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.reward-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(232, 160, 32, 0.07), transparent 70%);
+  pointer-events: none;
+}
+
+.reward-card__label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.reward-card__locked {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.reward-card__amount {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--reward);
+  line-height: 1.1;
+  text-shadow: 0 0 30px var(--reward-glow);
+}
+
+.reward-card__amount--complete {
+  color: var(--reward);
+  text-shadow: 0 0 40px var(--reward-glow), 0 0 80px rgba(232, 160, 32, 0.15);
+}
+
+.reward-card__target {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+.reward-progress-bar-wrap {
+  max-width: 440px;
+}
+
+.reward-progress-bar-fill {
+  background: linear-gradient(90deg, var(--reward), #f0c040);
 }
 
 /* ---------- Placeholder Sections ---------- */
