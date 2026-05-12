@@ -8,7 +8,7 @@ type Props = {
   cssVars: CSSProperties;
 };
 
-export default function BigNumber({ state, cssVars }: Props) {
+export default function BigNumber({ params, state, cssVars }: Props) {
   const numText =
     state.status === "before"
       ? `D-${state.dDay}`
@@ -24,7 +24,7 @@ export default function BigNumber({ state, cssVars }: Props) {
         : `${CONFIG.PARTICIPANT} 금연 완주`;
 
   return (
-    <div className="tmpl-big-number" style={cssVars}>
+    <div className={`tmpl-big-number size-${params.size}`} style={cssVars}>
       <span className="bn-num">{numText}</span>
       <span className="bn-label">{labelText}</span>
     </div>

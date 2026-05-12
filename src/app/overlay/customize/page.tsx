@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   buildOverlayUrl,
   OVERLAY_DEFAULTS,
@@ -50,27 +50,31 @@ export default function CustomizePage() {
   const [activePreset, setActivePreset] = useState<string | null>("다크 위젯");
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const paramsRef = useRef(params);
+  const [iframeSrc, setIframeSrc] = useState("");
 
   useEffect(() => {
     setParams(loadSaved());
-  }, []);
-
-  const updateIframe = useCallback((p: OverlayParams) => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      if (iframeRef.current) {
-        iframeRef.current.src = window.location.origin + buildOverlayUrl(p);
-      }
-    }, 300);
+    setIframeSrc(`${window.location.origin}/nosmokingsamdeok/overlay/`);
   }, []);
 
   useEffect(() => {
-    updateIframe(params);
+    paramsRef.current = params;
+    iframeRef.current?.contentWindow?.postMessage(
+      { type: "OVERLAY_PARAMS_UPDATE", params },
+      window.location.origin
+    );
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(params));
     } catch {}
-  }, [params, updateIframe]);
+  }, [params]);
+
+  function handleIframeLoad() {
+    iframeRef.current?.contentWindow?.postMessage(
+      { type: "OVERLAY_PARAMS_UPDATE", params: paramsRef.current },
+      window.location.origin
+    );
+  }
 
   function set<K extends keyof OverlayParams>(key: K, value: OverlayParams[K]) {
     setActivePreset(null);
@@ -284,6 +288,9 @@ export default function CustomizePage() {
         <div style={styles.iframeWrap}>
           <iframe
             ref={iframeRef}
+            src={iframeSrc || undefined}
+            onLoad={handleIframeLoad}
+            allowtransparency="true"
             style={styles.iframe}
             title="오버레이 미리보기"
           />
@@ -455,7 +462,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 10,
     overflow: "hidden",
     backgroundImage:
-      "repeating-conic-gradient(rgba(255,255,255,0.10) 0% 25%, rgba(255,255,255,0.03) 0% 50%)",
+      "repeating-conic-gradient(rgba(255,255,255,0.18) 0% 25%, rgba(255,255,255,0.06) 0% 50%)",
     backgroundSize: "16px 16px",
     border: "1px solid rgba(255,255,255,0.10)",
     flexShrink: 0,
