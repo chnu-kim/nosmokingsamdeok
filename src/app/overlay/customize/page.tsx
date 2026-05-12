@@ -376,7 +376,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   chipActive: {
     background: "rgba(255,68,68,0.25)",
-    borderColor: "rgba(255,68,68,0.6)",
+    border: "1px solid rgba(255,68,68,0.6)",
     color: "#ff8888",
   },
   colorPicker: {
@@ -407,7 +407,7 @@ const styles: Record<string, React.CSSProperties> = {
     minWidth: 0,
   },
   textInputFocus: {
-    borderColor: "rgba(255,68,68,0.5)",
+    border: "1px solid rgba(255,68,68,0.5)",
   },
   range: {
     width: "100%",
