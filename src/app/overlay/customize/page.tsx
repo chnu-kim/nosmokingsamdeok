@@ -47,6 +47,7 @@ function loadSaved(): OverlayParams {
 
 export default function CustomizePage() {
   const [params, setParams] = useState<OverlayParams>({ ...OVERLAY_DEFAULTS });
+  const [loaded, setLoaded] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activePreset, setActivePreset] = useState<string | null>("다크 위젯");
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
@@ -54,11 +55,14 @@ export default function CustomizePage() {
   const [iframeSrc, setIframeSrc] = useState("");
 
   useEffect(() => {
-    setParams(loadSaved());
-    setIframeSrc(`${window.location.origin}${buildOverlayUrl(OVERLAY_DEFAULTS)}`);
+    const saved = loadSaved();
+    setParams(saved);
+    setIframeSrc(`${window.location.origin}${buildOverlayUrl(saved)}`);
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!loaded) return;
     iframeRef.current?.contentWindow?.postMessage(
       { type: PREVIEW_MESSAGE_TYPE, params },
       window.location.origin
@@ -66,7 +70,7 @@ export default function CustomizePage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(params));
     } catch {}
-  }, [params]);
+  }, [params, loaded]);
 
   function handleIframeLoad() {
     iframeRef.current?.contentWindow?.postMessage(
