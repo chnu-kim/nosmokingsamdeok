@@ -55,6 +55,11 @@ export default function OverlayInner() {
   const [state, setState] = useState<OverlayState>(() => calculateOverlayState());
 
   useEffect(() => {
+    document.body.style.background = "transparent";
+    return () => { document.body.style.background = ""; };
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setState(calculateOverlayState());
     }, 60000);
