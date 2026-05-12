@@ -4,7 +4,7 @@ import {
   getReward,
   isRewardUnlocked,
   getDaysUntilReward,
-  getProgress,
+  calcProgress,
   CONFIG,
 } from "../challenge";
 
@@ -105,23 +105,21 @@ describe("getDaysUntilReward", () => {
 // 경계 조건은 내부 로직을 직접 검증
 // ────────────────────────────────────────────────────────────────
 
-describe("getProgress 내부 로직 (날짜 독립 케이스)", () => {
-  it("CONFIG.TOTAL_DAYS(31일) 기준 중간값 진행률 공식 검증", () => {
-    // getProgress()는 Date.now() 의존이므로, 동일 로직을 수동으로 검증
-    const progress = (day: number) => {
-      if (day < 1) return 0;
-      if (day > CONFIG.TOTAL_DAYS) return 100;
-      return Math.round((day / CONFIG.TOTAL_DAYS) * 100);
-    };
-
-    expect(progress(0)).toBe(0);
-    expect(progress(1)).toBe(3);       // Math.round(1/31 * 100) = 3
-    expect(progress(31)).toBe(100);
-    expect(progress(32)).toBe(100);    // 초과 → 100으로 클램핑
-    expect(progress(-1)).toBe(0);      // 미만 → 0으로 클램핑
+describe("calcProgress", () => {
+  it("0 미만 → 0 클램핑", () => {
+    expect(calcProgress(-1)).toBe(0);
+    expect(calcProgress(0)).toBe(0);
   });
 
-  it("TOTAL_DAYS 변경 시 getProgress()와 CONFIG.TOTAL_DAYS 참조 일치 확인", () => {
-    expect(CONFIG.TOTAL_DAYS).toBe(31);
+  it("1일차 진행률", () => {
+    expect(calcProgress(1)).toBe(3); // Math.round(1/31 * 100)
+  });
+
+  it("마지막 날 → 100", () => {
+    expect(calcProgress(CONFIG.TOTAL_DAYS)).toBe(100);
+  });
+
+  it("TOTAL_DAYS 초과 → 100 클램핑", () => {
+    expect(calcProgress(CONFIG.TOTAL_DAYS + 1)).toBe(100);
   });
 });

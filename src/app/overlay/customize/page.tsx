@@ -55,7 +55,7 @@ export default function CustomizePage() {
 
   useEffect(() => {
     setParams(loadSaved());
-    setIframeSrc(`${window.location.origin}/nosmokingsamdeok/overlay/`);
+    setIframeSrc(`${window.location.origin}${buildOverlayUrl(OVERLAY_DEFAULTS)}`);
   }, []);
 
   useEffect(() => {
@@ -290,7 +290,6 @@ export default function CustomizePage() {
             ref={iframeRef}
             src={iframeSrc || undefined}
             onLoad={handleIframeLoad}
-            allowtransparency="true"
             style={styles.iframe}
             title="오버레이 미리보기"
           />
