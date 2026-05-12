@@ -18,7 +18,7 @@ export default function MinimalSerif({ params, state, cssVars }: Props) {
 
   return (
     <div className={`tmpl-minimal-serif size-${params.size}`} style={cssVars}>
-      <span className="ms-day" style={{ whiteSpace: "nowrap" }}>{text}</span>
+      <span className="ms-day">{text}</span>
     </div>
   );
 }

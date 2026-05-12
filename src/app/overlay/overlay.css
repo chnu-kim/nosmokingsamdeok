@@ -160,14 +160,6 @@ body {
   font-family: var(--overlay-font, 'Gowun Batang', serif);
 }
 
-.ms-label {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--overlay-fg, #ffffff);
-  opacity: 0.65;
-  letter-spacing: 0.06em;
-}
-
 .ms-day {
   font-size: 40px;
   font-weight: 700;
