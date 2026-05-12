@@ -18,6 +18,7 @@ export default function HomePage() {
   const [day, setDay] = useState(0);
   const [progress, setProgress] = useState(0);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [dDayNum, setDDayNum] = useState(0);
 
   const tick = useCallback(() => {
     const s = getChallengeStatus();
@@ -26,7 +27,9 @@ export default function HomePage() {
     setDay(d);
     setProgress(getProgress());
     if (s === "before") {
-      setCountdown(msToComponents(getTimeUntilStart()));
+      const ms = getTimeUntilStart();
+      setCountdown(msToComponents(ms));
+      setDDayNum(Math.ceil(ms / 86400000));
     }
   }, []);
 
@@ -77,7 +80,7 @@ export default function HomePage() {
 
           <div className="day-counter">
             <div className="day-counter__number">
-              {status === "before" && "D-Day"}
+              {status === "before" && `D-${dDayNum}`}
               {status === "ongoing" && day}
               {status === "success" && "31"}
             </div>
