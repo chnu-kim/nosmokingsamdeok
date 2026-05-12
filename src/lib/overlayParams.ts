@@ -50,25 +50,31 @@ export function parseOverlayParams(
 ): OverlayParams {
   if (!searchParams) return { ...OVERLAY_DEFAULTS };
 
-  const template = searchParams.get("template") as OverlayTemplate;
+  const templateRaw = searchParams.get("template") ?? "";
   const fg = searchParams.get("fg") ?? "";
   const bg = searchParams.get("bg") ?? "";
   const opacityRaw = searchParams.get("opacity");
-  const font = searchParams.get("font") as OverlayFont;
-  const size = searchParams.get("size") as OverlaySize;
+  const fontRaw = searchParams.get("font") ?? "";
+  const sizeRaw = searchParams.get("size") ?? "";
 
   const opacity =
     opacityRaw !== null && !isNaN(Number(opacityRaw))
       ? Math.min(1, Math.max(0, Number(opacityRaw)))
       : OVERLAY_DEFAULTS.opacity;
 
+  const strings = VALID_TEMPLATES as readonly string[];
+  const fontStrings = VALID_FONTS as readonly string[];
+  const sizeStrings = VALID_SIZES as readonly string[];
+
   return {
-    template: VALID_TEMPLATES.includes(template) ? template : OVERLAY_DEFAULTS.template,
+    template: strings.includes(templateRaw)
+      ? (templateRaw as OverlayTemplate)
+      : OVERLAY_DEFAULTS.template,
     fg: HEX_RE.test(fg) ? fg : OVERLAY_DEFAULTS.fg,
     bg: bg === "transparent" || HEX_RE.test(bg) ? bg : OVERLAY_DEFAULTS.bg,
     opacity,
-    font: VALID_FONTS.includes(font) ? font : OVERLAY_DEFAULTS.font,
-    size: VALID_SIZES.includes(size) ? size : OVERLAY_DEFAULTS.size,
+    font: fontStrings.includes(fontRaw) ? (fontRaw as OverlayFont) : OVERLAY_DEFAULTS.font,
+    size: sizeStrings.includes(sizeRaw) ? (sizeRaw as OverlaySize) : OVERLAY_DEFAULTS.size,
   };
 }
 

@@ -1,9 +1,8 @@
 import type { CSSProperties } from "react";
 import { CONFIG } from "@/lib/challenge";
-import type { OverlayParams, OverlayState } from "@/lib/overlayParams";
+import type { OverlayState } from "@/lib/overlayParams";
 
 type Props = {
-  params: OverlayParams;
   state: OverlayState;
   cssVars: CSSProperties;
 };

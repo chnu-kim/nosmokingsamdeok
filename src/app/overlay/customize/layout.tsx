@@ -9,5 +9,5 @@ export default function CustomizeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <>{children}</>;
 }

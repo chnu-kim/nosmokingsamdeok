@@ -85,7 +85,7 @@ export default function CustomizePage() {
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
-    });
+    }).catch(() => {});
   }
 
   const bgIsTransparent = params.bg === "transparent";
