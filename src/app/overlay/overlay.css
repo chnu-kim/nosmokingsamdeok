@@ -8,11 +8,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background: transparent;
-  -webkit-font-smoothing: antialiased;
-}
-
 .overlay-container {
   display: inline-flex;
   flex-direction: column;
