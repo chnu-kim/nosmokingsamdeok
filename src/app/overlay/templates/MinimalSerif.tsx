@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function MinimalSerif({ params, state, cssVars }: Props) {
-  const text =
+  const statusText =
     state.status === "before"
       ? `금연 D-${state.dDay}`
       : state.status === "active"
@@ -18,7 +18,7 @@ export default function MinimalSerif({ params, state, cssVars }: Props) {
 
   return (
     <div className={`tmpl-minimal-serif size-${params.size}`} style={cssVars}>
-      <span className="ms-day">{text}</span>
+      <span className="ms-day">{statusText}</span>
     </div>
   );
 }
