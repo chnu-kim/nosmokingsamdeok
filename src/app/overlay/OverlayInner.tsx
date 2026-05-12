@@ -13,6 +13,7 @@ import {
 import {
   parseOverlayParams,
   resolveBg,
+  OVERLAY_DEFAULTS,
   type OverlayState,
 } from "@/lib/overlayParams";
 import DefaultTemplate from "./templates/DefaultTemplate";
@@ -25,6 +26,12 @@ const FONT_FAMILY: Record<string, string> = {
   sans: "inherit",
   serif: "'Gowun Batang', serif",
   mono: "monospace",
+};
+
+const STATE_FG: Record<string, string> = {
+  before: "#ff6b35",
+  success: "#44ff88",
+  active: OVERLAY_DEFAULTS.fg,
 };
 
 function calculateOverlayState(): OverlayState {
@@ -55,8 +62,11 @@ export default function OverlayInner() {
     return () => clearInterval(interval);
   }, []);
 
+  const effectiveFg =
+    params.fg !== OVERLAY_DEFAULTS.fg ? params.fg : (STATE_FG[state.status] ?? params.fg);
+
   const cssVars = {
-    "--overlay-fg": params.fg,
+    "--overlay-fg": effectiveFg,
     "--overlay-bg": resolveBg(params.bg, params.opacity),
     "--overlay-font": FONT_FAMILY[params.font] ?? "inherit",
   } as CSSProperties;

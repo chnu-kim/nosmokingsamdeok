@@ -46,10 +46,10 @@ function loadSaved(): OverlayParams {
 
 export default function CustomizePage() {
   const [params, setParams] = useState<OverlayParams>({ ...OVERLAY_DEFAULTS });
-  const [iframeSrc, setIframeSrc] = useState("");
   const [copied, setCopied] = useState(false);
   const [activePreset, setActivePreset] = useState<string | null>("다크 위젯");
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -59,7 +59,9 @@ export default function CustomizePage() {
   const updateIframe = useCallback((p: OverlayParams) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      setIframeSrc(window.location.origin + buildOverlayUrl(p));
+      if (iframeRef.current) {
+        iframeRef.current.src = window.location.origin + buildOverlayUrl(p);
+      }
     }, 300);
   }, []);
 
@@ -280,13 +282,11 @@ export default function CustomizePage() {
       <div style={styles.preview}>
         <p style={styles.previewLabel}>미리보기</p>
         <div style={styles.iframeWrap}>
-          {iframeSrc && (
-            <iframe
-              src={iframeSrc}
-              style={styles.iframe}
-              title="오버레이 미리보기"
-            />
-          )}
+          <iframe
+            ref={iframeRef}
+            style={styles.iframe}
+            title="오버레이 미리보기"
+          />
         </div>
         <p style={styles.sizeNote}>OBS 권장: 너비 300 × 높이 120 px</p>
         <p style={styles.obsHint}>
