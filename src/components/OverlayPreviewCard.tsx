@@ -1,27 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 import Link from "next/link";
-import { CONFIG, getProgress, getTimeUntilStart } from "@/lib/challenge";
-import type { ChallengeStatus } from "@/lib/challenge";
+import { CONFIG, type ChallengeStatus } from "@/lib/challenge";
 
 interface Props {
   day: number;
   status: ChallengeStatus;
+  progress: number;
+  dDay: number;
 }
 
 const PRESET_STYLES = [
-  { name: "다크", fg: "#ffffff", bg: "rgba(10,10,14,0.82)" },
-  { name: "네온", fg: "#ff4444", bg: "rgba(10,10,14,0.15)" },
-  { name: "투명", fg: "#ffffff", bg: "transparent" },
+  { name: "다크", fg: "#ffffff", bg: "rgba(10,10,14,0.82)", dot: "#0a0a0e" },
+  { name: "네온", fg: "#ff4444", bg: "rgba(10,10,14,0.15)", dot: "#ff4444" },
+  { name: "투명", fg: "#ffffff", bg: "transparent", dot: "#333" },
 ];
 
-export default function OverlayPreviewCard({ day, status }: Props) {
+function OverlayPreviewCard({ day, status, progress, dDay }: Props) {
   const [activePreset, setActivePreset] = useState(0);
   const preset = PRESET_STYLES[activePreset];
-  const progress = getProgress();
 
-  const dDay = status === "before" ? Math.ceil(getTimeUntilStart() / 86400000) : 0;
   const dayText =
     status === "before"
       ? `D-${dDay}`
@@ -59,17 +58,17 @@ export default function OverlayPreviewCard({ day, status }: Props) {
               background: preset.bg,
             }}
           >
-            <span className="mini__title">{CONFIG.PARTICIPANT} 금연</span>
-            <span className="mini__day" style={{ color: preset.fg }}>
+            <span className="overlay-mini__title">{CONFIG.PARTICIPANT} 금연</span>
+            <span className="overlay-mini__day" style={{ color: preset.fg }}>
               {dayText}
             </span>
-            <div className="mini__bar">
+            <div className="overlay-mini__bar">
               <div
-                className="mini__bar-fill"
+                className="overlay-mini__bar-fill"
                 style={{ width: `${status === "success" ? 100 : progress}%` }}
               />
             </div>
-            <span className="mini__progress">{progressText}</span>
+            <span className="overlay-mini__progress">{progressText}</span>
           </div>
         </div>
 
@@ -82,7 +81,7 @@ export default function OverlayPreviewCard({ day, status }: Props) {
             >
               <span
                 className="preset-chip__dot"
-                style={{ background: p.fg === "#ff4444" ? p.fg : p.bg === "transparent" ? "#333" : p.bg }}
+                style={{ background: p.dot }}
               />
               {p.name}
             </button>
@@ -99,3 +98,5 @@ export default function OverlayPreviewCard({ day, status }: Props) {
     </section>
   );
 }
+
+export default memo(OverlayPreviewCard);

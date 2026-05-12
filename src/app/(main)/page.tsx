@@ -190,7 +190,7 @@ export default function HomePage() {
           <RewardSection day={day} status={status} />
         )}
 
-        <OverlayPreviewCard day={day} status={status} />
+        <OverlayPreviewCard day={day} status={status} progress={progress} dDay={dDayNum} />
 
         <section className="health-section" />
         <section className="savings-section" />
