@@ -127,10 +127,12 @@ export const PRESETS: Preset[] = [
   },
 ];
 
+export const PREVIEW_MESSAGE_TYPE = "OVERLAY_PARAMS_UPDATE" as const;
+
 export function parsePreviewMessage(event: MessageEvent): OverlayParams | null {
   const data = event.data;
   if (!data || typeof data !== "object") return null;
-  if (data.type !== "OVERLAY_PARAMS_UPDATE") return null;
+  if (data.type !== PREVIEW_MESSAGE_TYPE) return null;
   const params = data.params;
   if (!params || typeof params !== "object" || Array.isArray(params)) return null;
   return params as OverlayParams;

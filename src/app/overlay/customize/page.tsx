@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import {
   buildOverlayUrl,
   OVERLAY_DEFAULTS,
+  PREVIEW_MESSAGE_TYPE,
   PRESETS,
   type OverlayParams,
   type OverlayTemplate,
@@ -50,7 +51,6 @@ export default function CustomizePage() {
   const [activePreset, setActivePreset] = useState<string | null>("다크 위젯");
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const paramsRef = useRef(params);
   const [iframeSrc, setIframeSrc] = useState("");
 
   useEffect(() => {
@@ -59,9 +59,8 @@ export default function CustomizePage() {
   }, []);
 
   useEffect(() => {
-    paramsRef.current = params;
     iframeRef.current?.contentWindow?.postMessage(
-      { type: "OVERLAY_PARAMS_UPDATE", params },
+      { type: PREVIEW_MESSAGE_TYPE, params },
       window.location.origin
     );
     try {
@@ -71,7 +70,7 @@ export default function CustomizePage() {
 
   function handleIframeLoad() {
     iframeRef.current?.contentWindow?.postMessage(
-      { type: "OVERLAY_PARAMS_UPDATE", params: paramsRef.current },
+      { type: PREVIEW_MESSAGE_TYPE, params },
       window.location.origin
     );
   }

@@ -63,6 +63,7 @@ export default function OverlayInner() {
 
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
+      if (event.origin !== window.location.origin) return;
       const parsed = parsePreviewMessage(event);
       if (parsed) setPreviewParams(parsed);
     }
