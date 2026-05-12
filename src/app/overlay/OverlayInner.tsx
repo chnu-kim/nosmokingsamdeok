@@ -23,7 +23,7 @@ import BarOnly from "./templates/BarOnly";
 
 const FONT_FAMILY: Record<string, string> = {
   sans: "inherit",
-  serif: "var(--font-serif)",
+  serif: "'Gowun Batang', serif",
   mono: "monospace",
 };
 

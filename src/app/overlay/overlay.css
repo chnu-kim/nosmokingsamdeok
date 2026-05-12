@@ -1,5 +1,7 @@
 /* 삼덕이 금연 챌린지 - OBS 오버레이 스타일 */
 
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -140,7 +142,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
-  font-family: var(--font-serif, serif);
+  font-family: var(--overlay-font, 'Gowun Batang', serif);
 }
 
 .ms-label {
