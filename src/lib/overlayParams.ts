@@ -39,6 +39,10 @@ function hexToRgba(hex: string, opacity: number): string {
   return `rgba(${r},${g},${b},${opacity})`;
 }
 
+export function resolveOverlayFg(fg: string, _status: string): string {
+  return fg;
+}
+
 export function resolveBg(bg: string, opacity: number): string {
   if (bg === "transparent") return "transparent";
   if (HEX_RE.test(bg)) return hexToRgba(bg, opacity);
@@ -58,7 +62,7 @@ export function parseOverlayParams(
   const sizeRaw = searchParams.get("size") ?? "";
 
   const opacity =
-    opacityRaw !== null && !isNaN(Number(opacityRaw))
+    opacityRaw !== null && opacityRaw.trim() !== "" && !isNaN(Number(opacityRaw))
       ? Math.min(1, Math.max(0, Number(opacityRaw)))
       : OVERLAY_DEFAULTS.opacity;
 

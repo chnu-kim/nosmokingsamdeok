@@ -13,7 +13,7 @@ import {
 import {
   parseOverlayParams,
   resolveBg,
-  OVERLAY_DEFAULTS,
+  resolveOverlayFg,
   type OverlayState,
 } from "@/lib/overlayParams";
 import DefaultTemplate from "./templates/DefaultTemplate";
@@ -28,11 +28,6 @@ const FONT_FAMILY: Record<string, string> = {
   mono: "monospace",
 };
 
-const STATE_FG: Record<string, string> = {
-  before: "#ff6b35",
-  success: "#44ff88",
-  active: OVERLAY_DEFAULTS.fg,
-};
 
 function calculateOverlayState(): OverlayState {
   const status = getChallengeStatus();
@@ -62,11 +57,8 @@ export default function OverlayInner() {
     return () => clearInterval(interval);
   }, []);
 
-  const effectiveFg =
-    params.fg !== OVERLAY_DEFAULTS.fg ? params.fg : (STATE_FG[state.status] ?? params.fg);
-
   const cssVars = {
-    "--overlay-fg": effectiveFg,
+    "--overlay-fg": resolveOverlayFg(params.fg, state.status),
     "--overlay-bg": resolveBg(params.bg, params.opacity),
     "--overlay-font": FONT_FAMILY[params.font] ?? "inherit",
   } as CSSProperties;
