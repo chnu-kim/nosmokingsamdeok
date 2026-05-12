@@ -12,6 +12,7 @@ import {
   type ChallengeStatus,
 } from "@/lib/challenge";
 import RewardSection from "@/components/RewardSection";
+import OverlayPreviewCard from "@/components/OverlayPreviewCard";
 
 export default function HomePage() {
   const [status, setStatus] = useState<ChallengeStatus>("before");
@@ -188,6 +189,8 @@ export default function HomePage() {
         {(status === "ongoing" || status === "success") && (
           <RewardSection day={day} status={status} />
         )}
+
+        <OverlayPreviewCard day={day} status={status} progress={progress} dDay={dDayNum} />
 
         <section className="health-section" />
         <section className="savings-section" />
