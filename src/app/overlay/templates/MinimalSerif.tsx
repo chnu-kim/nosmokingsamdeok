@@ -9,20 +9,16 @@ type Props = {
 };
 
 export default function MinimalSerif({ params, state, cssVars }: Props) {
-  const dayText =
+  const text =
     state.status === "before"
-      ? `D-${state.dDay}`
+      ? `금연 D-${state.dDay}`
       : state.status === "active"
-        ? `${state.currentDay}일차`
-        : `${CONFIG.TOTAL_DAYS}일 완주`;
-
-  const labelText =
-    state.status === "before" ? "금연 챌린지" : `${CONFIG.PARTICIPANT} 금연`;
+        ? `금연 ${state.currentDay}일차`
+        : `금연 ${CONFIG.TOTAL_DAYS}일 완주`;
 
   return (
     <div className={`tmpl-minimal-serif size-${params.size}`} style={cssVars}>
-      <span className="ms-label">{labelText}</span>
-      <span className="ms-day">{dayText}</span>
+      <span className="ms-day" style={{ whiteSpace: "nowrap" }}>{text}</span>
     </div>
   );
 }
