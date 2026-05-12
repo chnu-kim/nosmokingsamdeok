@@ -55,8 +55,13 @@ export default function OverlayInner() {
   const [state, setState] = useState<OverlayState>(() => calculateOverlayState());
 
   useEffect(() => {
-    document.body.style.background = "transparent";
-    return () => { document.body.style.background = ""; };
+    const s = document.body.style;
+    s.background = "transparent";
+    s.setProperty("-webkit-font-smoothing", "antialiased");
+    return () => {
+      s.background = "";
+      s.removeProperty("-webkit-font-smoothing");
+    };
   }, []);
 
   useEffect(() => {
