@@ -17,11 +17,12 @@ body {
   gap: 6px;
   padding: 14px 20px;
   border-radius: 12px;
-  background: rgba(10, 10, 14, 0.82);
+  background: var(--overlay-bg, rgba(10, 10, 14, 0.82));
   border: 1px solid rgba(255, 68, 68, 0.25);
   backdrop-filter: blur(8px);
   min-width: 260px;
   max-width: 320px;
+  font-family: var(--overlay-font, inherit);
 }
 
 /* --- 상단: 라벨 + 일차 --- */
@@ -39,11 +40,17 @@ body {
   font-size: 36px;
   font-weight: 900;
   line-height: 1.1;
-  color: #ffffff;
+  color: var(--overlay-fg, #ffffff);
   text-shadow:
     0 0 20px rgba(255, 68, 68, 0.5),
     0 2px 6px rgba(0, 0, 0, 0.8);
 }
+
+/* --- 사이즈 변형 --- */
+
+.size-sm .day-value { font-size: 27px; }
+.size-md .day-value { font-size: 36px; }
+.size-lg .day-value { font-size: 48px; }
 
 /* --- 진행률 바 --- */
 
@@ -121,4 +128,148 @@ body {
 
 .state-success {
   border-color: rgba(68, 255, 136, 0.25);
+}
+
+/* ============================================================
+   템플릿: minimal-serif
+   배경 없이 텍스트만, Gowun Batang 세리프 스타일
+   ============================================================ */
+
+.tmpl-minimal-serif {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-family: var(--font-serif, serif);
+}
+
+.ms-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--overlay-fg, #ffffff);
+  opacity: 0.65;
+  letter-spacing: 0.06em;
+}
+
+.ms-day {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--overlay-fg, #ffffff);
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   템플릿: big-number
+   숫자만 거대하게, 라벨 아주 작게, 배경 반투명
+   ============================================================ */
+
+.tmpl-big-number {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--overlay-bg, rgba(10, 10, 14, 0.7));
+  backdrop-filter: blur(6px);
+}
+
+.bn-num {
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--overlay-fg, #ffffff);
+  letter-spacing: -0.04em;
+  text-shadow:
+    0 0 30px rgba(255, 68, 68, 0.4),
+    0 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.bn-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--overlay-fg, #ffffff);
+  opacity: 0.5;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   템플릿: one-line
+   한 줄 가로 배너
+   ============================================================ */
+
+.tmpl-one-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--overlay-bg, rgba(10, 10, 14, 0.82));
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+  height: 38px;
+}
+
+.ol-main {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--overlay-fg, #ffffff);
+  letter-spacing: 0.01em;
+}
+
+.ol-sep {
+  font-size: 14px;
+  color: var(--overlay-fg, #ffffff);
+  opacity: 0.35;
+}
+
+.ol-penalty {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 107, 53, 0.8);
+}
+
+/* ============================================================
+   템플릿: bar-only
+   얇은 진행률 바 + 일차, 최소 공간
+   ============================================================ */
+
+.tmpl-bar-only {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+}
+
+.bo-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bo-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #ff4444, #ff6b35);
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 6px rgba(255, 68, 68, 0.5);
+}
+
+.bo-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--overlay-fg, #ffffff);
+  white-space: nowrap;
+}
+
+.bo-total {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--overlay-fg, #ffffff);
+  opacity: 0.4;
+  white-space: nowrap;
 }
