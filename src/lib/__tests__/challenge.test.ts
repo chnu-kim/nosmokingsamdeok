@@ -5,6 +5,7 @@ import {
   isRewardUnlocked,
   getDaysUntilReward,
   calcProgress,
+  getStatusForDay,
   CONFIG,
 } from "../challenge";
 
@@ -121,5 +122,32 @@ describe("calcProgress", () => {
 
   it("TOTAL_DAYS 초과 → 100 클램핑", () => {
     expect(calcProgress(CONFIG.TOTAL_DAYS + 1)).toBe(100);
+  });
+});
+
+// ────────────────────────────────────────────────────────────────
+// getStatusForDay — 챌린지 상태 경계값
+// ────────────────────────────────────────────────────────────────
+
+describe("getStatusForDay", () => {
+  it("0일 이하 → before (챌린지 시작 전)", () => {
+    expect(getStatusForDay(0)).toBe("before");
+    expect(getStatusForDay(-1)).toBe("before");
+  });
+
+  it("1일차 → ongoing (첫 날)", () => {
+    expect(getStatusForDay(1)).toBe("ongoing");
+  });
+
+  it("31일차(TOTAL_DAYS) → ongoing (마지막 날은 아직 진행 중)", () => {
+    expect(getStatusForDay(CONFIG.TOTAL_DAYS)).toBe("ongoing");
+  });
+
+  it("32일차(TOTAL_DAYS + 1) → success (완주 다음 날부터 성공)", () => {
+    expect(getStatusForDay(CONFIG.TOTAL_DAYS + 1)).toBe("success");
+  });
+
+  it("100일차 → success (성공 이후도 유지)", () => {
+    expect(getStatusForDay(100)).toBe("success");
   });
 });
