@@ -14,11 +14,14 @@ export function getCurrentDay(): number {
   return Math.floor((now - start) / 86400000) + 1;
 }
 
-export function getChallengeStatus(): ChallengeStatus {
-  const day = getCurrentDay();
+export function getStatusForDay(day: number): ChallengeStatus {
   if (day < 1) return "before";
   if (day <= CONFIG.TOTAL_DAYS) return "ongoing";
   return "success";
+}
+
+export function getChallengeStatus(): ChallengeStatus {
+  return getStatusForDay(getCurrentDay());
 }
 
 export function getTimeUntilStart(): number {
