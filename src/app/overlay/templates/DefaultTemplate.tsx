@@ -27,20 +27,23 @@ export default function DefaultTemplate({ params, state, cssVars }: Props) {
         {state.status === "active" && `${state.currentDay}일차`}
         {state.status === "success" && "성공!"}
       </span>
-      <div className="overlay-progress-wrap">
-        <div className="overlay-progress-bar">
-          <div
-            className="overlay-progress-fill"
-            style={{ width: `${state.progress}%` }}
-          />
+      {state.status !== "success" && (
+        <div className="overlay-progress-wrap">
+          <div className="overlay-progress-bar">
+            <div
+              className="overlay-progress-fill"
+              style={{ width: `${state.progress}%` }}
+            />
+          </div>
+          <span className="overlay-progress-text">
+            {state.status === "before" && "시작 대기중"}
+            {state.status === "active" && `${state.currentDay} / ${CONFIG.TOTAL_DAYS}일`}
+          </span>
         </div>
-        <span className="overlay-progress-text">
-          {state.status === "before" && "시작 대기중"}
-          {state.status === "active" && `${state.currentDay} / ${CONFIG.TOTAL_DAYS}일`}
-          {state.status === "success" && `${CONFIG.TOTAL_DAYS}일 완료`}
-        </span>
-      </div>
-      <span className="penalty-text">{`벌칙: ${CONFIG.PENALTY}`}</span>
+      )}
+      {state.status !== "success" && (
+        <span className="penalty-text">{`벌칙: ${CONFIG.PENALTY}`}</span>
+      )}
     </div>
   );
 }

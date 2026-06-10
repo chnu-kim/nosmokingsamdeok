@@ -18,9 +18,11 @@ export default function BarOnly({ params, state, cssVars }: Props) {
 
   return (
     <div className={`tmpl-bar-only size-${params.size}`} style={cssVars}>
-      <div className="bo-bar">
-        <div className="bo-fill" style={{ width: `${state.progress}%` }} />
-      </div>
+      {state.status !== "success" && (
+        <div className="bo-bar">
+          <div className="bo-fill" style={{ width: `${state.progress}%` }} />
+        </div>
+      )}
       <span className="bo-label">{labelText}</span>
       {state.status === "active" && (
         <span className="bo-total">/ {CONFIG.TOTAL_DAYS}</span>
