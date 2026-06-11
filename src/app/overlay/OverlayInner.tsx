@@ -5,9 +5,9 @@ import { useSearchParams } from "next/navigation";
 import type { CSSProperties } from "react";
 import {
   CONFIG,
-  getChallengeStatus,
+  calcProgress,
   getCurrentDay,
-  getProgress,
+  getStatusForDay,
   getTimeUntilStart,
 } from "@/lib/challenge";
 import {
@@ -32,8 +32,8 @@ const FONT_FAMILY: Record<string, string> = {
 
 
 function calculateOverlayState(): OverlayState {
-  const status = getChallengeStatus();
-  const currentDay = getCurrentDay();
+  const day = getCurrentDay();
+  const status = getStatusForDay(day);
 
   if (status === "before") {
     const dDay = Math.ceil(getTimeUntilStart() / 86400000);
@@ -41,10 +41,10 @@ function calculateOverlayState(): OverlayState {
   }
 
   if (status === "ongoing") {
-    return { status: "active", currentDay, progress: getProgress(), dDay: 0 };
+    return { status: "active", currentDay: day, progress: calcProgress(day), dDay: 0 };
   }
 
-  return { status: "success", currentDay, progress: 100, dDay: 0 };
+  return { status: "success", currentDay: CONFIG.TOTAL_DAYS, progress: 100, dDay: 0 };
 }
 
 export default function OverlayInner() {
