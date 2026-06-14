@@ -4,9 +4,7 @@ import {
   getReward,
   isRewardUnlocked,
   getDaysUntilReward,
-  calcProgress,
   getStatusForDay,
-  CONFIG,
 } from "../challenge";
 
 // ────────────────────────────────────────────────────────────────
@@ -102,31 +100,7 @@ describe("getDaysUntilReward", () => {
 });
 
 // ────────────────────────────────────────────────────────────────
-// getProgress — day 인자 없이 호출하면 Date.now() 의존이라
-// 경계 조건은 내부 로직을 직접 검증
-// ────────────────────────────────────────────────────────────────
-
-describe("calcProgress", () => {
-  it("0 미만 → 0 클램핑", () => {
-    expect(calcProgress(-1)).toBe(0);
-    expect(calcProgress(0)).toBe(0);
-  });
-
-  it("1일차 진행률", () => {
-    expect(calcProgress(1)).toBe(3); // Math.round(1/31 * 100)
-  });
-
-  it("마지막 날 → 100", () => {
-    expect(calcProgress(CONFIG.TOTAL_DAYS)).toBe(100);
-  });
-
-  it("TOTAL_DAYS 초과 → 100 클램핑", () => {
-    expect(calcProgress(CONFIG.TOTAL_DAYS + 1)).toBe(100);
-  });
-});
-
-// ────────────────────────────────────────────────────────────────
-// getStatusForDay — 챌린지 상태 경계값
+// getStatusForDay — 챌린지 상태 경계값 (무기한: before/ongoing 두 상태만)
 // ────────────────────────────────────────────────────────────────
 
 describe("getStatusForDay", () => {
@@ -139,15 +113,11 @@ describe("getStatusForDay", () => {
     expect(getStatusForDay(1)).toBe("ongoing");
   });
 
-  it("31일차(TOTAL_DAYS) → ongoing (마지막 날은 아직 진행 중)", () => {
-    expect(getStatusForDay(CONFIG.TOTAL_DAYS)).toBe("ongoing");
+  it("31일차 → ongoing (목표일 없으므로 계속 진행 중)", () => {
+    expect(getStatusForDay(31)).toBe("ongoing");
   });
 
-  it("32일차(TOTAL_DAYS + 1) → success (완주 다음 날부터 성공)", () => {
-    expect(getStatusForDay(CONFIG.TOTAL_DAYS + 1)).toBe("success");
-  });
-
-  it("100일차 → success (성공 이후도 유지)", () => {
-    expect(getStatusForDay(100)).toBe("success");
+  it("1000일차 → ongoing (무기한)", () => {
+    expect(getStatusForDay(1000)).toBe("ongoing");
   });
 });

@@ -4,8 +4,6 @@ import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import type { CSSProperties } from "react";
 import {
-  CONFIG,
-  calcProgress,
   getCurrentDay,
   getStatusForDay,
   getTimeUntilStart,
@@ -14,7 +12,6 @@ import {
   parseOverlayParams,
   parsePreviewMessage,
   resolveBg,
-  resolveOverlayFg,
   type OverlayParams,
   type OverlayState,
 } from "@/lib/overlayParams";
@@ -37,14 +34,10 @@ function calculateOverlayState(): OverlayState {
 
   if (status === "before") {
     const dDay = Math.ceil(getTimeUntilStart() / 86400000);
-    return { status: "before", dDay, currentDay: 0, progress: 0 };
+    return { status: "before", dDay, currentDay: 0 };
   }
 
-  if (status === "ongoing") {
-    return { status: "active", currentDay: day, progress: calcProgress(day), dDay: 0 };
-  }
-
-  return { status: "success", currentDay: CONFIG.TOTAL_DAYS, progress: 100, dDay: 0 };
+  return { status: "active", currentDay: day, dDay: 0 };
 }
 
 export default function OverlayInner() {
@@ -82,7 +75,7 @@ export default function OverlayInner() {
   }, []);
 
   const cssVars = {
-    "--overlay-fg": resolveOverlayFg(params.fg, state.status),
+    "--overlay-fg": params.fg,
     "--overlay-bg": resolveBg(params.bg, params.opacity),
     "--overlay-font": FONT_FAMILY[params.font] ?? "inherit",
   } as CSSProperties;

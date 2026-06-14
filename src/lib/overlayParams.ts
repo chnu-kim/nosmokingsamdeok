@@ -12,10 +12,9 @@ export type OverlayParams = {
 };
 
 export type OverlayState = {
-  status: "before" | "active" | "success";
+  status: "before" | "active";
   dDay: number;
   currentDay: number;
-  progress: number;
 };
 
 export const OVERLAY_DEFAULTS: OverlayParams = {
@@ -37,10 +36,6 @@ function hexToRgba(hex: string, opacity: number): string {
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
   return `rgba(${r},${g},${b},${opacity})`;
-}
-
-export function resolveOverlayFg(fg: string, _status: string): string {
-  return fg;
 }
 
 export function resolveBg(bg: string, opacity: number): string {
