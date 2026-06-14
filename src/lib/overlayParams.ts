@@ -38,7 +38,7 @@ function hexToRgba(hex: string, opacity: number): string {
   return `rgba(${r},${g},${b},${opacity})`;
 }
 
-export function resolveOverlayFg(fg: string, _status: string): string {
+export function resolveOverlayFg(fg: string): string {
   return fg;
 }
 

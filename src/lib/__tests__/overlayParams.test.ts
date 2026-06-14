@@ -24,13 +24,12 @@ describe("resolveOverlayFg", () => {
   it("사용자가 설정한 색상은 챌린지 상태와 무관하게 항상 그대로 적용", () => {
     expect(resolveOverlayFg("#ff0000", "before")).toBe("#ff0000");
     expect(resolveOverlayFg("#ff0000", "active")).toBe("#ff0000");
-    expect(resolveOverlayFg("#ff0000", "success")).toBe("#ff0000");
   });
 
   it("기본값(#ffffff)을 명시적으로 선택해도 그대로 적용 — 상태 색상으로 덮어쓰지 않음", () => {
     // 이전 구현의 버그: fg === OVERLAY_DEFAULTS.fg 면 상태 색상으로 치환했음
     expect(resolveOverlayFg(OVERLAY_DEFAULTS.fg, "before")).toBe(OVERLAY_DEFAULTS.fg);
-    expect(resolveOverlayFg(OVERLAY_DEFAULTS.fg, "success")).toBe(OVERLAY_DEFAULTS.fg);
+    expect(resolveOverlayFg(OVERLAY_DEFAULTS.fg, "active")).toBe(OVERLAY_DEFAULTS.fg);
   });
 
   it("before 상태의 기본 텍스트 색상은 주황(#ff6b35)", () => {

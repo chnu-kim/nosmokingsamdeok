@@ -76,7 +76,7 @@ export default function OverlayInner() {
   }, []);
 
   const cssVars = {
-    "--overlay-fg": resolveOverlayFg(params.fg, state.status),
+    "--overlay-fg": resolveOverlayFg(params.fg),
     "--overlay-bg": resolveBg(params.bg, params.opacity),
     "--overlay-font": FONT_FAMILY[params.font] ?? "inherit",
   } as CSSProperties;

@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import {
   CONFIG,
   getCurrentDay,
-  getChallengeStatus,
+  getStatusForDay,
   getTimeUntilStart,
   msToComponents,
   pad2,
@@ -20,8 +20,8 @@ export default function HomePage() {
   const [dDayNum, setDDayNum] = useState(0);
 
   const tick = useCallback(() => {
-    const s = getChallengeStatus();
     const d = getCurrentDay();
+    const s = getStatusForDay(d);
     setStatus(s);
     setDay(d);
     if (s === "before") {
