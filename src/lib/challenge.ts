@@ -5,10 +5,10 @@ export const CONFIG = {
 
 export type ChallengeStatus = "before" | "ongoing";
 
+const START_MS = new Date(CONFIG.START_DATE).getTime();
+
 export function getCurrentDay(): number {
-  const now = Date.now();
-  const start = new Date(CONFIG.START_DATE).getTime();
-  return Math.floor((now - start) / 86400000) + 1;
+  return Math.floor((Date.now() - START_MS) / 86400000) + 1;
 }
 
 export function getStatusForDay(day: number): ChallengeStatus {
@@ -16,12 +16,8 @@ export function getStatusForDay(day: number): ChallengeStatus {
   return "ongoing";
 }
 
-export function getChallengeStatus(): ChallengeStatus {
-  return getStatusForDay(getCurrentDay());
-}
-
 export function getTimeUntilStart(): number {
-  return new Date(CONFIG.START_DATE).getTime() - Date.now();
+  return START_MS - Date.now();
 }
 
 export function msToComponents(ms: number) {

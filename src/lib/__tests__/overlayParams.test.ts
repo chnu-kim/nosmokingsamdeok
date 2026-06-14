@@ -3,7 +3,6 @@ import {
   parseOverlayParams,
   buildOverlayUrl,
   resolveBg,
-  resolveOverlayFg,
   parsePreviewMessage,
   OVERLAY_DEFAULTS,
 } from "../overlayParams";
@@ -15,30 +14,6 @@ import {
 function sp(obj: Record<string, string>): Pick<URLSearchParams, "get"> {
   return { get: (k: string) => obj[k] ?? null };
 }
-
-// ────────────────────────────────────────────────────────────────
-// resolveOverlayFg
-// ────────────────────────────────────────────────────────────────
-
-describe("resolveOverlayFg", () => {
-  it("사용자가 설정한 색상은 챌린지 상태와 무관하게 항상 그대로 적용", () => {
-    expect(resolveOverlayFg("#ff0000", "before")).toBe("#ff0000");
-    expect(resolveOverlayFg("#ff0000", "active")).toBe("#ff0000");
-  });
-
-  it("기본값(#ffffff)을 명시적으로 선택해도 그대로 적용 — 상태 색상으로 덮어쓰지 않음", () => {
-    // 이전 구현의 버그: fg === OVERLAY_DEFAULTS.fg 면 상태 색상으로 치환했음
-    expect(resolveOverlayFg(OVERLAY_DEFAULTS.fg, "before")).toBe(OVERLAY_DEFAULTS.fg);
-    expect(resolveOverlayFg(OVERLAY_DEFAULTS.fg, "active")).toBe(OVERLAY_DEFAULTS.fg);
-  });
-
-  it("before 상태의 기본 텍스트 색상은 주황(#ff6b35)", () => {
-    // fg 파라미터가 없을 때(=기본값이 아닌, 파라미터 자체가 없을 때)는
-    // overlayParams에서 이미 OVERLAY_DEFAULTS.fg로 채워지므로 이 함수 수준에선 단순 통과
-    // 상태별 기본 색상은 CSS에서 --overlay-fg 변수 fallback으로 처리
-    expect(resolveOverlayFg("#ff6b35", "before")).toBe("#ff6b35");
-  });
-});
 
 // ────────────────────────────────────────────────────────────────
 // resolveBg

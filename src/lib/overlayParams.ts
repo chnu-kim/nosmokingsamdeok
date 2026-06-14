@@ -38,10 +38,6 @@ function hexToRgba(hex: string, opacity: number): string {
   return `rgba(${r},${g},${b},${opacity})`;
 }
 
-export function resolveOverlayFg(fg: string): string {
-  return fg;
-}
-
 export function resolveBg(bg: string, opacity: number): string {
   if (bg === "transparent") return "transparent";
   if (HEX_RE.test(bg)) return hexToRgba(bg, opacity);
