@@ -12,10 +12,9 @@ export type OverlayParams = {
 };
 
 export type OverlayState = {
-  status: "before" | "active" | "success";
+  status: "before" | "active";
   dDay: number;
   currentDay: number;
-  progress: number;
 };
 
 export const OVERLAY_DEFAULTS: OverlayParams = {

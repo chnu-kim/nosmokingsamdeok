@@ -12,19 +12,11 @@ export default function OneLine({ params, state, cssVars }: Props) {
   const mainText =
     state.status === "before"
       ? `${CONFIG.PARTICIPANT} 금연 챌린지 D-${state.dDay}`
-      : state.status === "active"
-        ? `${CONFIG.PARTICIPANT} 금연 ${state.currentDay}일차`
-        : `${CONFIG.PARTICIPANT} 금연 ${CONFIG.TOTAL_DAYS}일 완주`;
+      : `${CONFIG.PARTICIPANT} 금연 ${state.currentDay}일차`;
 
   return (
     <div className={`tmpl-one-line size-${params.size}`} style={cssVars}>
       <span className="ol-main">{mainText}</span>
-      {state.status !== "success" && (
-        <>
-          <span className="ol-sep">·</span>
-          <span className="ol-penalty">벌칙: {CONFIG.PENALTY}</span>
-        </>
-      )}
     </div>
   );
 }

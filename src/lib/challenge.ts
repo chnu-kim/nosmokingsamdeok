@@ -1,12 +1,9 @@
 export const CONFIG = {
-  START_DATE: "2026-05-13T00:00:00+09:00",
-  TOTAL_DAYS: 31,
+  START_DATE: "2026-06-14T00:00:00+09:00",
   PARTICIPANT: "삼덕이",
-  PENALTY: "삼루먼쇼",
-  CIGARETTE_PRICE_PER_DAY: 4500,
 } as const;
 
-export type ChallengeStatus = "before" | "ongoing" | "success";
+export type ChallengeStatus = "before" | "ongoing";
 
 export function getCurrentDay(): number {
   const now = Date.now();
@@ -16,8 +13,7 @@ export function getCurrentDay(): number {
 
 export function getStatusForDay(day: number): ChallengeStatus {
   if (day < 1) return "before";
-  if (day <= CONFIG.TOTAL_DAYS) return "ongoing";
-  return "success";
+  return "ongoing";
 }
 
 export function getChallengeStatus(): ChallengeStatus {
@@ -37,16 +33,6 @@ export function msToComponents(ms: number) {
     minutes: Math.floor((totalSec % 3600) / 60),
     seconds: totalSec % 60,
   };
-}
-
-export function calcProgress(day: number): number {
-  if (day < 1) return 0;
-  if (day > CONFIG.TOTAL_DAYS) return 100;
-  return Math.round((day / CONFIG.TOTAL_DAYS) * 100);
-}
-
-export function getProgress(): number {
-  return calcProgress(getCurrentDay());
 }
 
 export function pad2(n: number): string {

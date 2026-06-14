@@ -7,7 +7,6 @@ import { CONFIG, type ChallengeStatus } from "@/lib/challenge";
 interface Props {
   day: number;
   status: ChallengeStatus;
-  progress: number;
   dDay: number;
 }
 
@@ -17,23 +16,14 @@ const PRESET_STYLES = [
   { name: "투명", fg: "#ffffff", bg: "transparent", dot: "#333" },
 ];
 
-function OverlayPreviewCard({ day, status, progress, dDay }: Props) {
+function OverlayPreviewCard({ day, status, dDay }: Props) {
   const [activePreset, setActivePreset] = useState(0);
   const preset = PRESET_STYLES[activePreset];
 
   const dayText =
     status === "before"
       ? `D-${dDay}`
-      : status === "success"
-        ? "성공!"
-        : `${day}일차`;
-
-  const progressText =
-    status === "before"
-      ? "시작 대기중"
-      : status === "success"
-        ? `${CONFIG.TOTAL_DAYS}일 완료`
-        : `${day} / ${CONFIG.TOTAL_DAYS}일`;
+      : `${day}일차`;
 
   return (
     <section className="overlay-preview-section">
@@ -62,13 +52,6 @@ function OverlayPreviewCard({ day, status, progress, dDay }: Props) {
             <span className="overlay-mini__day" style={{ color: preset.fg }}>
               {dayText}
             </span>
-            <div className="overlay-mini__bar">
-              <div
-                className="overlay-mini__bar-fill"
-                style={{ width: `${status === "success" ? 100 : progress}%` }}
-              />
-            </div>
-            <span className="overlay-mini__progress">{progressText}</span>
           </div>
         </div>
 

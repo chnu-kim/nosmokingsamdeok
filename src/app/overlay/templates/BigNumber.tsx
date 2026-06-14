@@ -12,16 +12,12 @@ export default function BigNumber({ params, state, cssVars }: Props) {
   const numText =
     state.status === "before"
       ? `D-${state.dDay}`
-      : state.status === "active"
-        ? String(state.currentDay)
-        : String(CONFIG.TOTAL_DAYS);
+      : String(state.currentDay);
 
   const labelText =
     state.status === "before"
       ? "금연 챌린지"
-      : state.status === "active"
-        ? `${CONFIG.PARTICIPANT} 금연 ${state.currentDay}일차`
-        : `${CONFIG.PARTICIPANT} 금연 완주`;
+      : `${CONFIG.PARTICIPANT} 금연 ${state.currentDay}일차`;
 
   return (
     <div className={`tmpl-big-number size-${params.size}`} style={cssVars}>
