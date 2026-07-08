@@ -7,6 +7,7 @@ import {
   getCurrentDay,
   getStatusForDay,
   getTimeUntilStart,
+  getBestRecordStatus,
 } from "@/lib/challenge";
 import {
   parseOverlayParams,
@@ -34,10 +35,10 @@ function calculateOverlayState(): OverlayState {
 
   if (status === "before") {
     const dDay = Math.ceil(getTimeUntilStart() / 86400000);
-    return { status: "before", dDay, currentDay: 0 };
+    return { status: "before", dDay, currentDay: 0, bestRecord: getBestRecordStatus(0) };
   }
 
-  return { status: "active", currentDay: day, dDay: 0 };
+  return { status: "active", currentDay: day, dDay: 0, bestRecord: getBestRecordStatus(day) };
 }
 
 export default function OverlayInner() {

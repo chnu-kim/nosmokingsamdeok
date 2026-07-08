@@ -1,3 +1,5 @@
+import type { BestRecordStatus } from "./challenge";
+
 export type OverlayTemplate = "default" | "minimal-serif" | "big-number" | "one-line" | "bar-only";
 export type OverlayFont = "sans" | "serif" | "mono";
 export type OverlaySize = "sm" | "md" | "lg";
@@ -15,6 +17,7 @@ export type OverlayState = {
   status: "before" | "active";
   dDay: number;
   currentDay: number;
+  bestRecord: BestRecordStatus;
 };
 
 export const OVERLAY_DEFAULTS: OverlayParams = {

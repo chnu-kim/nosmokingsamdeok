@@ -1,10 +1,12 @@
 import { describe, it, expect } from "vitest";
 import {
+  CONFIG,
   msToComponents,
   getReward,
   isRewardUnlocked,
   getDaysUntilReward,
   getStatusForDay,
+  getBestRecordStatus,
 } from "../challenge";
 
 // ────────────────────────────────────────────────────────────────
@@ -119,5 +121,39 @@ describe("getStatusForDay", () => {
 
   it("1000일차 → ongoing (무기한)", () => {
     expect(getStatusForDay(1000)).toBe("ongoing");
+  });
+});
+
+// ────────────────────────────────────────────────────────────────
+// getBestRecordStatus — 최고 기록 대비 현재 진행 상태
+// ────────────────────────────────────────────────────────────────
+
+describe("getBestRecordStatus", () => {
+  it("최고 기록보다 적은 일수 → isNewRecord: false, diff: 0", () => {
+    expect(getBestRecordStatus(15, 31)).toEqual({ isNewRecord: false, best: 31, diff: 0 });
+  });
+
+  it("최고 기록과 정확히 같은 일수(타이) → 아직 신기록 아님", () => {
+    expect(getBestRecordStatus(31, 31)).toEqual({ isNewRecord: false, best: 31, diff: 0 });
+  });
+
+  it("최고 기록보다 1일 많음 → isNewRecord: true, diff: 1", () => {
+    expect(getBestRecordStatus(32, 31)).toEqual({ isNewRecord: true, best: 31, diff: 1 });
+  });
+
+  it("최고 기록을 크게 넘음 → diff는 초과분", () => {
+    expect(getBestRecordStatus(45, 31)).toEqual({ isNewRecord: true, best: 31, diff: 14 });
+  });
+
+  it("currentDay 0 (시작 전) → 신기록 아님", () => {
+    expect(getBestRecordStatus(0, 31)).toEqual({ isNewRecord: false, best: 31, diff: 0 });
+  });
+
+  it("best 인자 생략 시 CONFIG.BEST_STREAK 기본값 사용", () => {
+    expect(getBestRecordStatus(15)).toEqual({
+      isNewRecord: false,
+      best: CONFIG.BEST_STREAK,
+      diff: 0,
+    });
   });
 });

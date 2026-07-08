@@ -43,6 +43,19 @@
     0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
+.best-record {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--overlay-fg, #ffffff);
+  opacity: 0.4;
+  letter-spacing: 0.02em;
+}
+
+.best-record.is-new-record {
+  font-size: 12px;
+  opacity: 1;
+}
+
 /* --- 사이즈 변형 --- */
 
 .size-sm .day-value  { font-size: 27px; }
