@@ -1,6 +1,7 @@
 export const CONFIG = {
   START_DATE: "2026-06-14T00:00:00+09:00",
   PARTICIPANT: "삼덕이",
+  BEST_STREAK: 31,
 } as const;
 
 export type ChallengeStatus = "before" | "ongoing";
@@ -46,4 +47,18 @@ export function isRewardUnlocked(day?: number): boolean {
 
 export function getDaysUntilReward(day?: number): number {
   return Math.max(0, 10 - (day ?? getCurrentDay()));
+}
+
+export type BestRecordStatus = {
+  isNewRecord: boolean;
+  best: number;
+  diff: number;
+};
+
+export function getBestRecordStatus(
+  currentDay: number,
+  best: number = CONFIG.BEST_STREAK
+): BestRecordStatus {
+  const isNewRecord = currentDay > best;
+  return { isNewRecord, best, diff: isNewRecord ? currentDay - best : 0 };
 }
