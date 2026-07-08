@@ -15,17 +15,19 @@ export default function DefaultTemplate({ params, state, cssVars }: Props) {
 
   return (
     <div className={containerClass} style={cssVars}>
-      <span className="day-label">
-        {state.status === "before" ? "금연 챌린지" : `${CONFIG.PARTICIPANT} 금연`}
-      </span>
+      <div className="label-row">
+        <span className="day-label">
+          {state.status === "before" ? "금연 챌린지" : `${CONFIG.PARTICIPANT} 금연`}
+        </span>
+        <span className={`best-record${state.bestRecord.isNewRecord ? " is-new-record" : ""}`}>
+          {state.bestRecord.isNewRecord
+            ? `신기록 (+${state.bestRecord.diff}일)`
+            : `최고 기록 ${state.bestRecord.best}일`}
+        </span>
+      </div>
       <span className="day-value">
         {state.status === "before" && `D-${state.dDay}`}
         {state.status === "active" && `${state.currentDay}일차`}
-      </span>
-      <span className={`best-record${state.bestRecord.isNewRecord ? " is-new-record" : ""}`}>
-        {state.bestRecord.isNewRecord
-          ? `신기록 (+${state.bestRecord.diff}일)`
-          : `최고 기록 ${state.bestRecord.best}일`}
       </span>
     </div>
   );
